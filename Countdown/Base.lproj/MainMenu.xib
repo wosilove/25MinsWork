@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
         <capability name="box content view" minToolsVersion="7.0"/>
     </dependencies>
@@ -677,26 +678,30 @@
             <connections>
                 <outlet property="A7DaysPlanView" destination="Uru-1v-4mA" id="OmP-fo-Y93"/>
                 <outlet property="APlanView" destination="7k3-QO-gok" id="8A0-KZ-avw"/>
-                <outlet property="BPlanView" destination="jrg-vS-Y8x" id="eT0-jB-J6o"/>
                 <outlet property="BreakInfo" destination="VgH-1D-DgT" id="QZy-2m-crA"/>
                 <outlet property="BreakTimeWindow" destination="IcV-0D-hmH" id="22V-pd-BFB"/>
                 <outlet property="CommandLine" destination="lJm-EN-I44" id="CaF-5C-eni"/>
                 <outlet property="CurrentGoal" destination="kV3-zq-BIV" id="IkT-J8-WV3"/>
                 <outlet property="CurrentGoalButton" destination="deT-GF-QBK" id="nRU-e2-s3Z"/>
-                <outlet property="Days" destination="VJN-9w-GlS" id="Rfh-ay-o6s"/>
+                <outlet property="EndDate" destination="QTH-DJ-g0D" id="2vy-nw-plf"/>
+                <outlet property="GoalBox" destination="i9z-WR-bhI" id="wUY-JT-YwH"/>
                 <outlet property="GoalInfo" destination="RP0-UL-Apc" id="J6P-Tk-yQp"/>
+                <outlet property="GoalTextview" destination="kB6-aJ-4hf" id="Bvm-FO-axU"/>
                 <outlet property="GoalView" destination="bOQ-v0-3od" id="U0W-Pm-4NU"/>
                 <outlet property="GoalWindow" destination="DMa-ff-EMJ" id="PXL-1f-7zG"/>
                 <outlet property="StartButton" destination="eHw-Mb-tR8" id="PcS-5e-QgF"/>
                 <outlet property="TimeLabel" destination="e8Y-Tb-PGd" id="KLs-f2-PcG"/>
                 <outlet property="TimerView" destination="AXz-C0-DXY" id="mCN-u9-91d"/>
+                <outlet property="Today" destination="EfQ-Nx-ITs" id="ktb-Li-xSA"/>
                 <outlet property="WorkingTable" destination="D5D-gW-yrP" id="ve1-hM-xni"/>
+                <outlet property="dateFormatter" destination="Jkf-c0-rCd" id="7nA-I1-VfF"/>
                 <outlet property="datePicker" destination="vzG-ks-S4X" id="Nvf-by-Ev8"/>
                 <outlet property="datePickerPanel" destination="J2R-Lx-z1r" id="Yaw-MI-5Tv"/>
                 <outlet property="menu" destination="qKg-9u-tId" id="6gv-KE-Tcd"/>
                 <outlet property="window" destination="ork-Vp-Leq" id="moh-LM-A6Q"/>
             </connections>
         </customObject>
+        <dateFormatter formatterBehavior="custom10_4" dateStyle="short" dateFormat="y-M-d" id="Jkf-c0-rCd"/>
         <customObject id="420" customClass="NSFontManager"/>
         <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="ork-Vp-Leq" customClass="JWBorderlessWindow">
             <rect key="contentRect" x="283" y="305" width="233" height="29"/>
@@ -766,7 +771,7 @@
                 </subviews>
             </view>
         </window>
-        <window allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" animationBehavior="default" id="D5D-gW-yrP">
+        <window title="还有3天" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="D5D-gW-yrP">
             <windowStyleMask key="styleMask" titled="YES"/>
             <rect key="contentRect" x="473" y="320" width="760" height="407"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
@@ -781,9 +786,9 @@
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textField focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kV3-zq-BIV">
-                                    <rect key="frame" x="7" y="19" width="326" height="51"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="center" title="完成定时器" drawsBackground="YES" usesSingleLineMode="YES" id="d53-Hb-2un">
-                                        <font key="font" metaFont="systemBold" size="38"/>
+                                    <rect key="frame" x="0.0" y="29" width="340" height="51"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="center" title="使用状态机搞定联机" drawsBackground="YES" id="d53-Hb-2un">
+                                        <font key="font" size="36" name=".PingFangSC-Medium"/>
                                         <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </textFieldCell>
@@ -791,69 +796,23 @@
                                         <outlet property="delegate" destination="494" id="idD-tA-VhH"/>
                                     </connections>
                                 </textField>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9rl-Dr-yrb">
-                                    <rect key="frame" x="90" y="78" width="161" height="19"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="当前聚焦" id="i1O-nT-uzZ">
-                                        <font key="font" size="18" name="STHeitiSC-Light"/>
-                                        <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </textFieldCell>
-                                </textField>
                             </subviews>
                         </view>
                         <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
                         <color key="fillColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
                     </box>
-                    <scrollView fixedFrame="YES" borderType="line" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" allowsMagnification="YES" translatesAutoresizingMaskIntoConstraints="NO" id="hGK-iF-AaH">
-                        <rect key="frame" x="21" y="90" width="156" height="135"/>
-                        <clipView key="contentView" ambiguous="YES" drawsBackground="NO" copiesOnScroll="NO" id="7BW-vl-0HD">
-                            <rect key="frame" x="1" y="1" width="138" height="133"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <textView ambiguous="YES" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="jrg-vS-Y8x">
-                                    <rect key="frame" x="0.0" y="0.0" width="138" height="133"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
-                                    <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                    <size key="minSize" width="138" height="133"/>
-                                    <size key="maxSize" width="463" height="10000000"/>
-                                    <attributedString key="textStorage">
-                                        <fragment content="text">
-                                            <attributes>
-                                                <color key="NSColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
-                                                <font key="NSFont" size="18" name=".AppleSystemUIFont"/>
-                                                <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
-                                            </attributes>
-                                        </fragment>
-                                    </attributedString>
-                                    <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="138" height="133"/>
-                                    <size key="maxSize" width="463" height="10000000"/>
-                                </textView>
-                            </subviews>
-                            <color key="backgroundColor" red="0.55945336818695068" green="0.28993931412696838" blue="0.91531378030776978" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </clipView>
-                        <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="Yjt-il-RcG">
-                            <rect key="frame" x="-100" y="-100" width="87" height="18"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                        <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="0up-ir-PeU">
-                            <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask"/>
-                        </scroller>
-                    </scrollView>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eVK-Q4-wWz">
                         <rect key="frame" x="391" y="90" width="156" height="135"/>
                         <clipView key="contentView" ambiguous="YES" id="0DU-f1-AHe">
-                            <rect key="frame" x="1" y="1" width="138" height="133"/>
+                            <rect key="frame" x="1" y="1" width="154" height="133"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="7k3-QO-gok">
-                                    <rect key="frame" x="0.0" y="0.0" width="138" height="133"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="133"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                                     <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <size key="minSize" width="138" height="133"/>
+                                    <size key="minSize" width="154" height="133"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <attributedString key="textStorage">
                                         <fragment content="text">
@@ -865,7 +824,7 @@
                                         </fragment>
                                     </attributedString>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="138" height="133"/>
+                                    <size key="minSize" width="154" height="133"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <connections>
                                         <outlet property="delegate" destination="494" id="1JZ-ZN-Ezi"/>
@@ -879,24 +838,24 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="Cai-ZJ-uTm">
-                            <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
+                            <rect key="frame" x="139" y="1" width="16" height="133"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F13-iN-MIL">
                         <rect key="frame" x="577" y="120" width="156" height="105"/>
                         <clipView key="contentView" ambiguous="YES" id="4pc-7f-Tf3">
-                            <rect key="frame" x="1" y="1" width="138" height="103"/>
+                            <rect key="frame" x="1" y="1" width="154" height="103"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="bOQ-v0-3od">
-                                    <rect key="frame" x="0.0" y="0.0" width="138" height="103"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="103"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <size key="minSize" width="138" height="103"/>
+                                    <size key="minSize" width="154" height="103"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <color key="insertionPointColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <size key="minSize" width="138" height="103"/>
+                                    <size key="minSize" width="154" height="103"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -907,24 +866,24 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="SeX-RN-XU8">
-                            <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
+                            <rect key="frame" x="139" y="1" width="16" height="103"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
                     <scrollView fixedFrame="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="67y-Qg-qEf">
                         <rect key="frame" x="205" y="90" width="156" height="135"/>
                         <clipView key="contentView" ambiguous="YES" id="DP0-Yv-RBn">
-                            <rect key="frame" x="1" y="1" width="138" height="133"/>
+                            <rect key="frame" x="1" y="1" width="154" height="133"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             <subviews>
                                 <textView ambiguous="YES" importsGraphics="NO" richText="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="Uru-1v-4mA">
-                                    <rect key="frame" x="0.0" y="0.0" width="138" height="133"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="154" height="133"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <color key="backgroundColor" red="1" green="1" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
-                                    <size key="minSize" width="138" height="133"/>
+                                    <size key="minSize" width="154" height="133"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                     <color key="insertionPointColor" red="0.61496788263320923" green="0.7419770359992981" blue="0.92070764303207397" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    <size key="minSize" width="138" height="133"/>
+                                    <size key="minSize" width="154" height="133"/>
                                     <size key="maxSize" width="463" height="10000000"/>
                                 </textView>
                             </subviews>
@@ -935,53 +894,21 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                         <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="gMb-ul-70o">
-                            <rect key="frame" x="-15" y="1" width="16" height="0.0"/>
+                            <rect key="frame" x="139" y="1" width="16" height="133"/>
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8K-rs-nXg">
-                        <rect key="frame" x="203" y="228" width="160" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="任务分解" id="tWy-Np-22A">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I33-9l-drl">
-                        <rect key="frame" x="557" y="322" width="17" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="→" id="gGW-1T-DAo">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Cj7-1y-jm4">
-                        <rect key="frame" x="647" y="243" width="17" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="↓" id="G2U-UP-S1m">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UuB-yt-Nr6">
                         <rect key="frame" x="368" y="150" width="17" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="→" id="Oao-md-AKQ">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I4f-3S-Hvl">
-                        <rect key="frame" x="430" y="228" width="69" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="今天的计划" id="Ia3-at-o2Y">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⬅︎" id="Oao-md-AKQ">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fO4-7A-6G8">
-                        <rect key="frame" x="634" y="228" width="43" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="已完成" id="CbP-yQ-PJC">
+                        <rect key="frame" x="575" y="228" width="160" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="已提交Github" id="CbP-yQ-PJC">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -991,25 +918,17 @@
                         <rect key="frame" x="575" y="269" width="160" height="115"/>
                         <buttonCell key="cell" type="bevel" title="搞定" bezelStyle="regularSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="sqt-wM-nHS">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="systemBold" size="38"/>
+                            <font key="font" size="38" name="PingFangSC-Regular"/>
                         </buttonCell>
                         <connections>
                             <action selector="TapGoalDone:" target="494" id="R70-Me-mgG"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="AHN-VA-3hM">
-                        <rect key="frame" x="461" y="243" width="17" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="↑" id="gTh-oz-kbD">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                        </textFieldCell>
-                    </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cv6-BG-oLM">
                         <rect key="frame" x="298" y="18" width="156" height="40"/>
-                        <buttonCell key="cell" type="squareTextured" title="关闭" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8X-HK-btd">
+                        <buttonCell key="cell" type="squareTextured" title="完成" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8X-HK-btd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="system"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
                         </buttonCell>
                         <connections>
                             <action selector="SaveAndHiden:" target="494" id="BuZ-58-VBP"/>
@@ -1021,14 +940,6 @@
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                        </textFieldCell>
-                    </textField>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMj-k1-OFE">
-                        <rect key="frame" x="19" y="228" width="160" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="目标和截止日期" id="2Ax-lz-onx">
-                            <font key="font" size="13" name="STHeitiSC-Medium"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Pcc-zQ-yNq">
@@ -1043,41 +954,104 @@
                     </button>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4Q-07-FfL">
                         <rect key="frame" x="182" y="149" width="17" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="→" id="zde-da-jup">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⬅︎" id="zde-da-jup">
+                            <font key="font" size="13" name="HiraginoSans-W6"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I4f-3S-Hvl">
+                        <rect key="frame" x="389" y="228" width="67" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="今日待办" id="Ia3-at-o2Y">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <button focusRingType="none" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VJN-9w-GlS">
-                        <rect key="frame" x="18" y="269" width="160" height="115"/>
-                        <buttonCell key="cell" type="bevel" title="7天" bezelStyle="regularSquare" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="Nnw-pX-oI3">
-                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                            <font key="font" metaFont="systemBold" size="38"/>
-                        </buttonCell>
-                        <connections>
-                            <action selector="TapedDaysButton:" target="494" id="aij-uO-MJG"/>
-                        </connections>
-                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8K-rs-nXg">
+                        <rect key="frame" x="203" y="228" width="160" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="任务分解" id="tWy-Np-22A">
+                            <font key="font" size="13" name="STHeitiSC-Medium"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i9z-WR-bhI">
+                        <rect key="frame" x="17" y="90" width="163" height="292"/>
+                        <subviews>
+                            <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kB6-aJ-4hf">
+                                <rect key="frame" x="12" y="127" width="139" height="38"/>
+                                <textFieldCell key="cell" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" focusRingType="none" alignment="center" title="提交审核阿道夫水电费水电费" drawsBackground="YES" id="Zmg-uo-Oye">
+                                    <font key="font" size="18" name=".PingFangSC-Medium"/>
+                                    <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </textFieldCell>
+                            </textField>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QTH-DJ-g0D">
+                                <rect key="frame" x="-2" y="191" width="167" height="22"/>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="2016-4-30" id="Aqz-y1-jfl">
+                                    <font key="font" metaFont="systemBold" size="18"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <button focusRingType="none" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZJn-Wc-2qn">
+                                <rect key="frame" x="66" y="218" width="32" height="33"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="regularSquare" image="CalendarTemplate" imagePosition="only" alignment="center" borderStyle="border" focusRingType="none" imageScaling="proportionallyDown" inset="2" id="nlG-pI-OEb">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" metaFont="system" size="10"/>
+                                </buttonCell>
+                                <connections>
+                                    <action selector="TapedShowCalendar:" target="494" id="oSI-qc-Q6W"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                    </customView>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMj-k1-OFE">
+                        <rect key="frame" x="15" y="386" width="167" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="目标 －给用户测试什么" id="2Ax-lz-onx">
+                            <font key="font" size="13" name="STHeitiSC-Medium"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EfQ-Nx-ITs">
+                        <rect key="frame" x="460" y="228" width="89" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="2016-1-1" id="rc4-rt-0N6">
+                            <font key="font" size="13" name="STHeitiSC-Medium"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8JS-3u-FH1">
+                        <rect key="frame" x="205" y="381" width="342" height="20"/>
+                        <textFieldCell key="cell" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="border" focusRingType="none" alignment="center" placeholderString="备忘" drawsBackground="YES" usesSingleLineMode="YES" id="LNa-qP-QmH">
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                            <string key="title">测试
+阿斯顿</string>
+                            <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="selectedKnobColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="494" id="nT6-tD-beW"/>
             </connections>
-            <point key="canvasLocation" x="389" y="-467.5"/>
+            <point key="canvasLocation" x="395" y="-471.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="EcN-0W-Nvc"/>
         <window title="计时结束" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IcV-0D-hmH">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="498" y="320" width="489" height="127"/>
+            <rect key="contentRect" x="498" y="320" width="489" height="165"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="877"/>
             <view key="contentView" wantsLayer="YES" id="ybu-ph-IJA" customClass="Background">
-                <rect key="frame" x="0.0" y="0.0" width="489" height="127"/>
+                <rect key="frame" x="0.0" y="0.0" width="489" height="165"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VgH-1D-DgT">
-                        <rect key="frame" x="5" y="22" width="479" height="82"/>
+                        <rect key="frame" x="5" y="60" width="479" height="82"/>
                         <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" id="VjE-cb-ddV">
                             <font key="font" size="36" name="STHeitiSC-Medium"/>
                             <string key="title">休息时间到了！
@@ -1086,8 +1060,19 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9Bq-q1-Ttq">
+                        <rect key="frame" x="142" y="9" width="205" height="38"/>
+                        <buttonCell key="cell" type="bevel" title="干得不错 👍" bezelStyle="regularSquare" alignment="center" borderStyle="border" inset="2" id="kxI-yu-ErB">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="16" name=".PingFangSC-Semibold"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="TapedGood:" target="494" id="vj6-Bx-1Cs"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
+            <point key="canvasLocation" x="346.5" y="-823.5"/>
         </window>
         <window title="开心完成任务" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="default" id="DMa-ff-EMJ">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
@@ -1126,4 +1111,7 @@
             </view>
         </window>
     </objects>
+    <resources>
+        <image name="CalendarTemplate" width="512" height="512"/>
+    </resources>
 </document>

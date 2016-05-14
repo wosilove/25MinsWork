@@ -8,8 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 #import <FMDatabase.h>
+#import "MLCalendarView.h"
 
-@interface CTDAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate>
+@interface CTDAppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate,MLCalendarViewDelegate>
 {
     bool ShowOnTop;
     int count;
@@ -26,6 +27,27 @@
     
     NSDate *BeginDay;
 }
+
+
+@property (weak) IBOutlet NSTextField *Today;
+
+@property (weak) IBOutlet NSDateFormatter *dateFormatter;
+
+@property (weak) IBOutlet NSTextField *EndDate;
+
+@property (strong) NSPopover* calendarPopover;
+
+@property (strong) MLCalendarView*calendarView;
+
+
+
+@property (weak) IBOutlet NSTextField *GoalTextview;
+
+@property (unsafe_unretained) IBOutlet NSTextView *notes;
+
+
+@property (weak) IBOutlet NSView *GoalBox;
+
 
 @property (unsafe_unretained) IBOutlet NSWindow *GoalWindow;
 @property (weak) IBOutlet NSTextField *GoalInfo;

@@ -15,21 +15,27 @@ NSString * const kDoneString = @"Done!";
 
 @implementation CTDAppDelegate
 
+-(void)initUI
+{
+    self.Today.stringValue = [self.dateFormatter stringFromDate:[NSDate date]];
+    [self ShowTheCountdownDays];
+}
 
 - (IBAction)TapedDaysButton:(id)sender
 {
     if (days>=10)
         days=1;
     else days++;
+
+    BeginDay = [NSDate dateWithTimeIntervalSinceNow:0];
+    //    BeginDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:[NSDate date]];
+
     [self SetDays:days];
 }
 
 -(void)SetDays:(int)day
 {
     self.Days.title = [NSString stringWithFormat:@"%d天" ,day];
-    BeginDay = [NSDate dateWithTimeIntervalSinceNow:0];
-//    BeginDay = [NSDate dateWithTimeInterval:-24*60*60 sinceDate:[NSDate date]];
-    
     NSMutableAttributedString *colorTitle = [[NSMutableAttributedString alloc] initWithAttributedString:[self.Days attributedTitle]];
     NSRange titleRange = NSMakeRange(0, [colorTitle length]);
     [colorTitle addAttribute:NSForegroundColorAttributeName value:[NSColor whiteColor] range:titleRange];
@@ -73,6 +79,11 @@ NSString * const kDoneString = @"Done!";
 {
     [self SaveData];
     [self.WorkingTable close];
+}
+
+- (IBAction)TapedGood:(id)sender
+{
+    [self.BreakTimeWindow close];
 }
 
 
@@ -327,11 +338,11 @@ NSString * const kDoneString = @"Done!";
     
     
     
-    NSMutableArray *BPlanList = [NSMutableArray arrayWithArray:[self.BPlanView.string componentsSeparatedByString:@"\n"]];
-    for (id plan in BPlanList)
-    {
-        [db executeUpdate:sql,plan,@"B"];
-    }
+//    NSMutableArray *BPlanList = [NSMutableArray arrayWithArray:[self.BPlanView.string componentsSeparatedByString:@"\n"]];
+//    for (id plan in BPlanList)
+//    {
+//        [db executeUpdate:sql,plan,@"B"];
+//    }
     
     
 
@@ -343,6 +354,11 @@ NSString * const kDoneString = @"Done!";
     
     [db executeUpdate:sql,self.CurrentGoal.stringValue,@"D"];
     
+    [[NSUserDefaults standardUserDefaults] setObject:self.notes.string forKey:@"notes"];
+    [[NSUserDefaults standardUserDefaults] setObject:self.GoalTextview.stringValue forKey:@"Goal"];
+    
+    [[NSUserDefaults standardUserDefaults] setObject:self.EndDate.stringValue forKey:@"EndDate"];
+    
     [[NSUserDefaults standardUserDefaults] setInteger:days forKey:@"days"];
     [[NSUserDefaults standardUserDefaults] setObject:BeginDay forKey:@"BeginDay"];
     [[NSUserDefaults standardUserDefaults] synchronize];
@@ -351,15 +367,10 @@ NSString * const kDoneString = @"Done!";
     [db close];
 }
 
-- (IBAction)TapedBreakOK:(id)sender
-{
-    
-    
-}
-
-
 -(void)LoadData
 {
+    
+    
     days = (int)[[NSUserDefaults standardUserDefaults] integerForKey:@"days"];
     BeginDay = [[NSUserDefaults standardUserDefaults] objectForKey:@"BeginDay"];
     
@@ -385,14 +396,14 @@ NSString * const kDoneString = @"Done!";
     
     
     
-    sql = @"select * from Work1 WHERE type = 'B'";
-    rs = [db executeQuery:sql];
-    self.BPlanView.string = @"";
-    while ([rs next])
-    {
-        self.BPlanView.string = [self.BPlanView.string stringByAppendingString:[rs stringForColumn:@"plan"]];
-        self.BPlanView.string = [self.BPlanView.string stringByAppendingString:@"\n"];
-    }
+//    sql = @"select * from Work1 WHERE type = 'B'";
+//    rs = [db executeQuery:sql];
+//    self.BPlanView.string = @"";
+//    while ([rs next])
+//    {
+//        self.BPlanView.string = [self.BPlanView.string stringByAppendingString:[rs stringForColumn:@"plan"]];
+//        self.BPlanView.string = [self.BPlanView.string stringByAppendingString:@"\n"];
+//    }
     
     sql = @"select * from Work1 WHERE type = 'C'";
     rs = [db executeQuery:sql];
@@ -419,39 +430,98 @@ NSString * const kDoneString = @"Done!";
     self.GoalView.string =  [self.GoalView.string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     
 //    self.APlanView.textColor = [NSColor whiteColor];
-    self.BPlanView.textColor = [NSColor whiteColor];
-    self.BPlanView.font = [NSFont userFontOfSize:18];
+//    self.BPlanView.textColor = [NSColor whiteColor];
+    
+
+    
+    self.GoalBox.wantsLayer = YES;
+    self.GoalBox.layer.borderWidth = 1;
+    
+    
+    self.notes.string = [[NSUserDefaults standardUserDefaults] objectForKey:@"notes"];
+    self.GoalTextview.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"Goal"];
+    
+    self.EndDate.stringValue = [[NSUserDefaults standardUserDefaults] objectForKey:@"EndDate"];
+    
+    
+    
     
     [db close];
 }
 
-//
-//<# 书签 #> 切换：⌃/ ⌃? 设置：m回车 
-//
+
+-(void)ShowTheCountdownDays
+{
+    NSUInteger flags = (NSDayCalendarUnit | NSHourCalendarUnit | NSMinuteCalendarUnit | NSSecondCalendarUnit);
+    
+    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    
+    NSDateComponents *components = [calendar components:flags fromDate:[NSDate date] toDate:[self.dateFormatter dateFromString:self.EndDate.stringValue] options:0];
+    
+    
+    self.WorkingTable.title = [NSString stringWithFormat:@"距离本期目标，还有%ld天%ld小时",[components day]+1,[components hour]];
+}
+
+- (IBAction)TapedShowCalendar:(id)sender
+{
+    [self createCalendarPopover];
+
+    self.calendarView.date = [NSDate date];
+    self.calendarView.selectedDate = [self.dateFormatter dateFromString:self.EndDate.stringValue];
+    NSButton* btn = sender;
+    NSRect cellRect = [btn bounds];
+    [self.calendarPopover showRelativeToRect:cellRect ofView:btn preferredEdge:NSMaxYEdge];
+}
+
+
+- (void) createCalendarPopover {
+    NSPopover* myPopover = self.calendarPopover;
+    if(!myPopover) {
+        myPopover = [[NSPopover alloc] init];
+        self.calendarView = [[MLCalendarView alloc] init];
+        self.calendarView.delegate = self;
+        myPopover.contentViewController = self.calendarView;
+        myPopover.appearance = [NSAppearance appearanceNamed:NSAppearanceNameAqua];
+        myPopover.animates = YES;
+        myPopover.behavior = NSPopoverBehaviorTransient;
+    }
+    self.calendarPopover = myPopover;
+}
+
+
+- (void) didSelectDate:(NSDate *)selectedDate {
+    [self.calendarPopover close];
+    self.EndDate.stringValue = [self.dateFormatter stringFromDate:selectedDate];
+}
 
 
 - (IBAction)TapedSetGoal:(NSButton *)sender
 {
-    self.Days.wantsLayer = YES;
-    self.Days.bordered = NO;
-    self.Days.layer.backgroundColor = [NSColor colorWithCalibratedRed:22.0/255 green:102.0/255 blue:248.0/255 alpha:1.0].CGColor;
-    self.Days.layer.cornerRadius = 5;
-    self.Days.layer.borderWidth =1;
+//    self.Days.wantsLayer = YES;
+//    self.Days.bordered = NO;
+//    self.Days.layer.backgroundColor = [NSColor colorWithCalibratedRed:22.0/255 green:102.0/255 blue:248.0/255 alpha:1.0].CGColor;
+//    self.Days.layer.cornerRadius = 5;
+//    self.Days.layer.borderWidth =1;
+//
+//    
+//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+//    unsigned int unitFlag = NSDayCalendarUnit;
+//    
+//    
+//    if (BeginDay!=nil)
+//    {
+//        NSDateComponents *components = [calendar components:unitFlag fromDate:BeginDay toDate:[NSDate date] options:0];
+//        int d = (int)[components day];
+//        
+//        NSLog(@"BeginDay = %@",BeginDay);
+//        NSLog(@"Today = %@",[NSDate date]);
+//        NSLog(@"d = %d", d);
+//        days = days - d;
+//    }
+//    
+//    [self SetDays:days];
 
-    
-    
-    
-    
-    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-    unsigned int unitFlag = NSDayCalendarUnit;
-    NSDateComponents *components = [calendar components:unitFlag fromDate:BeginDay toDate:[NSDate date] options:0];
-    int d = (int)[components day];
-    
-    days = days - d;
-    [self SetDays:days];
-    
-    
-
+    [self initUI];
     
     if (![self.TimeLabel.stringValue isEqualToString:[NSString stringWithFormat:@"%d:00",PlanTime ]])
         IRQCount ++;
