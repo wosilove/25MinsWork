@@ -28,6 +28,11 @@
     NSDate *BeginDay;
 }
 
+@property (weak) IBOutlet NSTextField *GitStatus;
+
+
+@property (weak) IBOutlet NSButton *StartButton2;
+
 
 @property (weak) IBOutlet NSTextField *Today;
 

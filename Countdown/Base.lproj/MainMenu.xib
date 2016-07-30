@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="10116" systemVersion="15F34" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="10116"/>
@@ -684,12 +684,14 @@
                 <outlet property="CurrentGoal" destination="kV3-zq-BIV" id="IkT-J8-WV3"/>
                 <outlet property="CurrentGoalButton" destination="deT-GF-QBK" id="nRU-e2-s3Z"/>
                 <outlet property="EndDate" destination="QTH-DJ-g0D" id="2vy-nw-plf"/>
+                <outlet property="GitStatus" destination="YoH-Xt-NzY" id="cuq-G6-9d8"/>
                 <outlet property="GoalBox" destination="i9z-WR-bhI" id="wUY-JT-YwH"/>
                 <outlet property="GoalInfo" destination="RP0-UL-Apc" id="J6P-Tk-yQp"/>
                 <outlet property="GoalTextview" destination="kB6-aJ-4hf" id="Bvm-FO-axU"/>
                 <outlet property="GoalView" destination="bOQ-v0-3od" id="U0W-Pm-4NU"/>
                 <outlet property="GoalWindow" destination="DMa-ff-EMJ" id="PXL-1f-7zG"/>
                 <outlet property="StartButton" destination="eHw-Mb-tR8" id="PcS-5e-QgF"/>
+                <outlet property="StartButton2" destination="alW-CU-ASf" id="ueL-c6-G2c"/>
                 <outlet property="TimeLabel" destination="e8Y-Tb-PGd" id="KLs-f2-PcG"/>
                 <outlet property="TimerView" destination="AXz-C0-DXY" id="mCN-u9-91d"/>
                 <outlet property="Today" destination="EfQ-Nx-ITs" id="ktb-Li-xSA"/>
@@ -898,7 +900,7 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </scroller>
                     </scrollView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UuB-yt-Nr6">
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="UuB-yt-Nr6">
                         <rect key="frame" x="368" y="150" width="17" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⬅︎" id="Oao-md-AKQ">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
@@ -907,7 +909,7 @@
                         </textFieldCell>
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fO4-7A-6G8">
-                        <rect key="frame" x="575" y="228" width="160" height="17"/>
+                        <rect key="frame" x="575" y="228" width="98" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="已提交Github" id="CbP-yQ-PJC">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -925,8 +927,8 @@
                         </connections>
                     </button>
                     <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cv6-BG-oLM">
-                        <rect key="frame" x="298" y="18" width="156" height="40"/>
-                        <buttonCell key="cell" type="squareTextured" title="完成" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8X-HK-btd">
+                        <rect key="frame" x="205" y="18" width="156" height="40"/>
+                        <buttonCell key="cell" type="squareTextured" title="后台保存" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="h8X-HK-btd">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" size="13" name=".PingFangSC-Regular"/>
                         </buttonCell>
@@ -952,7 +954,7 @@
                             <action selector="TapedVim:" target="494" id="oat-Zy-SOS"/>
                         </connections>
                     </button>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4Q-07-FfL">
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U4Q-07-FfL">
                         <rect key="frame" x="182" y="149" width="17" height="17"/>
                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="⬅︎" id="zde-da-jup">
                             <font key="font" size="13" name="HiraginoSans-W6"/>
@@ -962,7 +964,7 @@
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="I4f-3S-Hvl">
                         <rect key="frame" x="389" y="228" width="67" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="今日待办" id="Ia3-at-o2Y">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="工作列表" id="Ia3-at-o2Y">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -970,7 +972,7 @@
                     </textField>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="z8K-rs-nXg">
                         <rect key="frame" x="203" y="228" width="160" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="任务分解" id="tWy-Np-22A">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="备忘录" id="tWy-Np-22A">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1007,9 +1009,9 @@
                             </button>
                         </subviews>
                     </customView>
-                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMj-k1-OFE">
+                    <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eMj-k1-OFE">
                         <rect key="frame" x="15" y="386" width="167" height="17"/>
-                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="目标 －给用户测试什么" id="2Ax-lz-onx">
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="left" title="目标" id="2Ax-lz-onx">
                             <font key="font" size="13" name="STHeitiSC-Medium"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -1023,7 +1025,7 @@
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
-                    <textField focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8JS-3u-FH1">
+                    <textField hidden="YES" focusRingType="none" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8JS-3u-FH1">
                         <rect key="frame" x="205" y="381" width="342" height="20"/>
                         <textFieldCell key="cell" truncatesLastVisibleLine="YES" selectable="YES" editable="YES" continuous="YES" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="border" focusRingType="none" alignment="center" placeholderString="备忘" drawsBackground="YES" usesSingleLineMode="YES" id="LNa-qP-QmH">
                             <font key="font" size="13" name=".PingFangSC-Regular"/>
@@ -1033,12 +1035,30 @@
                             <color key="backgroundColor" name="selectedKnobColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
+                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="alW-CU-ASf">
+                        <rect key="frame" x="391" y="18" width="156" height="40"/>
+                        <buttonCell key="cell" type="squareTextured" title="马上开始" bezelStyle="texturedSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="6a4-Ef-6Vg">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" size="13" name=".PingFangSC-Regular"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="TapedStart2:" target="494" id="zPp-ox-yDE"/>
+                        </connections>
+                    </button>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YoH-Xt-NzY">
+                        <rect key="frame" x="697" y="228" width="38" height="17"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="🔴" id="mfo-qB-tbw">
+                            <font key="font" size="13" name="STHeitiSC-Medium"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                 </subviews>
             </view>
             <connections>
                 <outlet property="delegate" destination="494" id="nT6-tD-beW"/>
             </connections>
-            <point key="canvasLocation" x="395" y="-471.5"/>
+            <point key="canvasLocation" x="379" y="-467.5"/>
         </window>
         <userDefaultsController representsSharedInstance="YES" id="EcN-0W-Nvc"/>
         <window title="计时结束" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="IcV-0D-hmH">

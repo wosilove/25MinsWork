@@ -84,6 +84,8 @@ NSString * const kDoneString = @"Done!";
 - (IBAction)TapedGood:(id)sender
 {
     [self.BreakTimeWindow close];
+    self.StartButton.enabled = YES;
+    self.StartButton2.enabled = YES;
 }
 
 
@@ -555,8 +557,17 @@ NSString * const kDoneString = @"Done!";
 }
 
 
+- (IBAction)TapedStart2:(id)sender
+{
+    [self.WorkingTable close];
+    [self TapedStart:nil];
+}
+
+
 - (IBAction)TapedStart:(NSButton *)sender
 {
+    self.StartButton.enabled = NO;
+    self.StartButton2.enabled = NO;
     [self SaveData];
     [BlinkTimer invalidate];
     [TipsTimer invalidate];
@@ -747,6 +758,7 @@ NSString * const kDoneString = @"Done!";
 
 -(NSString *)runCommand:(NSString *)commandToRun
 {
+    self.GitStatus.stringValue = @"🔴";
     NSTask *task;
     task = [[NSTask alloc] init];
     [task setLaunchPath: @"/bin/sh"];
@@ -755,7 +767,7 @@ NSString * const kDoneString = @"Done!";
                           @"-c" ,
                           [NSString stringWithFormat:@"%@", commandToRun],
                           nil];
-    NSLog(@"run command: %@",commandToRun);
+//    NSLog(@"run command: %@",commandToRun);
     [task setArguments: arguments];
     
     NSPipe *pipe;
@@ -774,6 +786,12 @@ NSString * const kDoneString = @"Done!";
     output = [[NSString alloc] initWithData: data encoding: NSUTF8StringEncoding];
     
     NSLog(@"command line = %@ \n%@", commandToRun,output);
+    
+    if ([output containsString:@"Your branch is up-to-date with 'origin"])
+        self.GitStatus.stringValue = @"🔵";
+    else
+        self.GitStatus.stringValue = @"🔴";
+    
     return output;
 }
 
