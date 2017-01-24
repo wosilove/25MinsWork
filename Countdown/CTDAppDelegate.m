@@ -78,7 +78,10 @@ NSString * const kDoneString = @"Done!";
 - (IBAction)SaveAndHiden:(id)sender
 {
     [self SaveData];
-    [self.WorkingTable close];
+//    [self.WorkingTable close];
+    
+    
+    [self.WorkingTable orderOut:self];
 }
 
 - (IBAction)TapedGood:(id)sender
@@ -145,7 +148,10 @@ NSString * const kDoneString = @"Done!";
 {
     static bool flag = YES;
     [self.TimeLabel setHidden:flag];
+    
     flag = !flag;
+    [self.statusItem setVisible:flag];
+    [self.statusItem setTitle:[NSString stringWithFormat:@"%@ %@        ",@"25:00",self.CurrentGoal.stringValue]];
     
     self.TimeLabel.stringValue = @"25:00";//[NSString stringWithFormat:@"%02d:%02d",MouseSleepSecond/60,MouseSleepSecond%60];
 }
@@ -252,7 +258,7 @@ NSString * const kDoneString = @"Done!";
     self.statusItem.menu = self.menu;
     
     self.timerWindowVisible = YES;
-    [self.window setLevel: NSFloatingWindowLevel];
+//    [self.window setLevel: NSFloatingWindowLevel];
     [self.window setOpaque:NO];
 
     [self.window setAlphaValue:0.8];
@@ -260,12 +266,11 @@ NSString * const kDoneString = @"Done!";
     
     ShowOnTop = NO;
     [self TapedWindow:nil];
-    [self ShowTime:PlanTime seconds:0];
+//    [self ShowTime:PlanTime seconds:0];
 //    [self.window setBackgroundColor:[NSColor clearColor]];
 //    self.StartButton.title = @"▸";
     
     BlinkTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(BlinkTimerWindow:) userInfo:nil repeats:YES];
-    [[NSRunLoop mainRunLoop] addTimer:BlinkTimer forMode:NSRunLoopCommonModes];
     
     
     self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
@@ -292,6 +297,9 @@ NSString * const kDoneString = @"Done!";
         [self LoadData];
         self.CurrentGoalButton.title = self.CurrentGoal.stringValue;
     }
+    
+    [[NSRunLoop mainRunLoop] addTimer:BlinkTimer forMode:NSRunLoopCommonModes];
+    [self ShowTime:PlanTime seconds:0];
     count = 0;
 }
 
@@ -496,6 +504,9 @@ NSString * const kDoneString = @"Done!";
     self.EndDate.stringValue = [self.dateFormatter stringFromDate:selectedDate];
 }
 
+- (IBAction)TapedSetGoal2:(id)sender {
+    [self TapedSetGoal:nil];
+}
 
 - (IBAction)TapedSetGoal:(NSButton *)sender
 {
@@ -528,6 +539,8 @@ NSString * const kDoneString = @"Done!";
     if (![self.TimeLabel.stringValue isEqualToString:[NSString stringWithFormat:@"%d:00",PlanTime ]])
         IRQCount ++;
     [self.WorkingTable makeKeyAndOrderFront:self];
+    [NSApp activateIgnoringOtherApps:YES];
+
     [self.BreakTimeWindow close];
 }
 
@@ -559,7 +572,8 @@ NSString * const kDoneString = @"Done!";
 
 - (IBAction)TapedStart2:(id)sender
 {
-    [self.WorkingTable close];
+//    [self.WorkingTable close];
+    [self.WorkingTable orderOut:self];
     [self TapedStart:nil];
 }
 
@@ -586,6 +600,8 @@ NSString * const kDoneString = @"Done!";
         breakMins = 0;
     }
     
+    
+    [self.statusItem setVisible:YES];
 
 //    if (count==0)
 //        self.StartButton.title = @"0";
@@ -607,7 +623,8 @@ NSString * const kDoneString = @"Done!";
 //    if ([self.TimeLabel.stringValue isEqualToString:[NSString stringWithFormat:@"%d:00",PlanTime ]])
     [self TapedStart:nil];
     
-    [self.WorkingTable close];
+//    [self.WorkingTable close];
+    [self.WorkingTable orderOut:self];
 }
 
 
@@ -710,7 +727,8 @@ NSString * const kDoneString = @"Done!";
     self.ProgressBar.doubleValue = PlanTime-minutes;
     
     [self.TimeLabel setStringValue:labelString];
-    [self.statusItem setTitle:labelString];
+    
+    [self.statusItem setTitle:[NSString stringWithFormat:@"%@ %@        ",labelString,self.CurrentGoal.stringValue]];
 }
 
 - (void)windowWillClose:(NSNotification *)notification
