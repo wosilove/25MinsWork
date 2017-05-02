@@ -25,8 +25,14 @@
     int MouseSleepSecond;
     int days;
     
+    NSTimer * pauseTimer;
     NSDate *BeginDay;
 }
+
+
+@property (weak) IBOutlet NSButton *Pause2MinsButton;
+
+@property (weak) IBOutlet NSButton *SaveButton;
 
 @property (weak) IBOutlet NSTextField *GitStatus;
 
@@ -106,6 +112,7 @@
 @property (strong) NSDate *countdownDate;
 @property (strong) NSStatusItem *statusItem;
 @property (assign) BOOL timerWindowVisible;
+
 
 @property (weak) IBOutlet NSButton *Days;
 

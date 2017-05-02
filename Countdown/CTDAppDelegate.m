@@ -21,6 +21,25 @@ NSString * const kDoneString = @"Done!";
     [self ShowTheCountdownDays];
 }
 
+
+- (void)Hidefor2Mins:(NSTimer *)timer
+{
+    [self TapedSetGoal:nil];
+    BreaktimeStart = [ NSDate date];
+    [pauseTimer invalidate];
+}
+
+- (IBAction)TapedHideButton:(NSButton *)sender {
+    [self SaveAndHiden:nil];
+    
+    if (pauseTimer ) [pauseTimer invalidate];
+    pauseTimer = [NSTimer timerWithTimeInterval:2*60 target:self selector:@selector(Hidefor2Mins:) userInfo:nil repeats:NO];
+    [[NSRunLoop mainRunLoop] addTimer:pauseTimer
+                              forMode:NSRunLoopCommonModes];
+
+}
+
+
 - (IBAction)TapedDaysButton:(id)sender
 {
     if (days>=10)
@@ -103,33 +122,35 @@ NSString * const kDoneString = @"Done!";
     Paused = NO;
 }
 
+
+-(void)EnableEdit
+{
+    self.APlanView.editable = YES;
+}
+
 -(void)StopTimer
 {
     count ++;
-//    self.StartButton.title = [NSString stringWithFormat:@"%d",count];
 
-//    [self PopBreakTimeWindow:nil];
     BreaktimeStart = [ NSDate date];
-    self.BreakInfo.stringValue = @"现在离开座位，站起来！\n休息眼睛，大脑，颈肩部！";// [NSString stringWithFormat:@"完成%d分钟聚焦",PlanTime ];
-    [self.BreakTimeWindow setLevel: NSFloatingWindowLevel];
-    [self.BreakTimeWindow makeKeyAndOrderFront:self];
+    
+    self.APlanView.editable = NO;
+    [self TapedSetGoal:nil];
+    
+    [self performSelector:@selector(EnableEdit)  withObject:nil afterDelay:1];
+    
+    self.StartButton2.hidden = YES;
+    self.SaveButton.hidden = YES;
+    self.Pause2MinsButton.hidden = NO;
     
     [self ShowTime:PlanTime seconds:0];
 
     [self.timer invalidate];
     
-//    NSTimer *timer = [NSTimer timerWithTimeInterval:9.0 target:self selector:@selector(HideBreakTimeWindow:) userInfo:nil repeats:NO];
-//    [[NSRunLoop mainRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    
     IRQCount = 0;
-    
-
     
     BlinkTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(BlinkTimerWindow:) userInfo:nil repeats:YES];
     [[NSRunLoop mainRunLoop] addTimer:BlinkTimer forMode:NSRunLoopCommonModes];
-    
-//    TipsTimer = [NSTimer timerWithTimeInterval:1*10 target:self selector:@selector(PopBreakTimeWindow:) userInfo:nil repeats:YES];
-//    [[NSRunLoop mainRunLoop] addTimer:TipsTimer forMode:NSRunLoopCommonModes];
 }
 
 -(void)PopBreakTimeWindow:(NSString *)info
@@ -144,16 +165,39 @@ NSString * const kDoneString = @"Done!";
 }
 
 
+
+
 - (void)BlinkTimerWindow:(NSTimer *)timer
 {
     static bool flag = YES;
     [self.TimeLabel setHidden:flag];
     
     flag = !flag;
-    [self.statusItem setVisible:flag];
-    [self.statusItem setTitle:[NSString stringWithFormat:@"%@ %@        ",@"25:00",self.CurrentGoal.stringValue]];
+    
+    if (flag)
+    {
+        [self.statusItem setTitle:[NSMutableString stringWithFormat:@"%@ %@        ",@"25:00",self.CurrentGoal.stringValue]];
+    }
+    else
+    {
+        [self.statusItem setTitle:[NSMutableString stringWithFormat:@"%@ %@        ",@"          ",self.CurrentGoal.stringValue]];
+    }
+    
     
     self.TimeLabel.stringValue = @"25:00";//[NSString stringWithFormat:@"%02d:%02d",MouseSleepSecond/60,MouseSleepSecond%60];
+    
+    
+    
+    NSTimeInterval BreakTime = [ [ NSDate date ] timeIntervalSinceDate:BreaktimeStart];
+    
+    if (BreakTime > 60 * 5) //休息时间超过5分钟，显示马上开始按钮
+    {
+        self.StartButton2.hidden = NO;
+        self.StartButton2.enabled = YES;
+        self.SaveButton.hidden = NO;
+        self.Pause2MinsButton.hidden = YES;
+    }
+    
 }
 
 
@@ -219,29 +263,10 @@ NSString * const kDoneString = @"Done!";
 {
     days=7;
     [self SetDays:days];
-/*
- 有动作就启动的设计：
-    1、回到电脑前，一动鼠标，启动25分钟计时。
-    2、离开电脑，超过5分钟，执行1
-    3、25分钟时间到，5分钟内仍旧在动鼠标，每2分钟提醒一次。
-    4、25分钟时间到，离开电脑，超过5分钟，执行1
-    5、在25分钟期间，鼠标不动5分钟，下次回到电脑，重新启动25分钟。
 
- 优点象结对编程，有另一个人在身边时，当然是马上进入工作状态。
- */
     MouseMoved = 0;
     MouseSleepSecond = 3599;
-//    [NSEvent addGlobalMonitorForEventsMatchingMask:NSMouseMovedMask|NSKeyDownMask|NSLeftMouseDownMask handler:^(NSEvent *e)
-//    {
-////        NSLog(@"%@", e);
-//        MouseMoved = 1;
-//    }];
-//    
-//    NSTimer *CheckMouse1 = [NSTimer timerWithTimeInterval:1.0 target:self selector:@selector(CheckMouse:) userInfo:nil repeats:YES];
-//    
-//    [[NSRunLoop mainRunLoop] addTimer:CheckMouse1 forMode:NSRunLoopCommonModes];
 
-    
     Paused = NO;
     PlanTime = 25;
 //    PlanTime = 1;
@@ -257,8 +282,8 @@ NSString * const kDoneString = @"Done!";
     [self.statusItem setHighlightMode:YES];
     self.statusItem.menu = self.menu;
     
+    
     self.timerWindowVisible = YES;
-//    [self.window setLevel: NSFloatingWindowLevel];
     [self.window setOpaque:NO];
 
     [self.window setAlphaValue:0.8];
@@ -266,17 +291,14 @@ NSString * const kDoneString = @"Done!";
     
     ShowOnTop = NO;
     [self TapedWindow:nil];
-//    [self ShowTime:PlanTime seconds:0];
-//    [self.window setBackgroundColor:[NSColor clearColor]];
-//    self.StartButton.title = @"▸";
+
     
     BlinkTimer = [NSTimer timerWithTimeInterval:0.5 target:self selector:@selector(BlinkTimerWindow:) userInfo:nil repeats:YES];
     
     
     self.calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     
-//    [self timerFired:self.timer];
-    
+
     
     NSString * doc = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) objectAtIndex:0];
     NSString * path = [doc stringByAppendingPathComponent:@"working25min.sqlite"];
@@ -510,46 +532,20 @@ NSString * const kDoneString = @"Done!";
 
 - (IBAction)TapedSetGoal:(NSButton *)sender
 {
-//    self.Days.wantsLayer = YES;
-//    self.Days.bordered = NO;
-//    self.Days.layer.backgroundColor = [NSColor colorWithCalibratedRed:22.0/255 green:102.0/255 blue:248.0/255 alpha:1.0].CGColor;
-//    self.Days.layer.cornerRadius = 5;
-//    self.Days.layer.borderWidth =1;
-//
-//    
-//    NSCalendar *calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
-//    unsigned int unitFlag = NSDayCalendarUnit;
-//    
-//    
-//    if (BeginDay!=nil)
-//    {
-//        NSDateComponents *components = [calendar components:unitFlag fromDate:BeginDay toDate:[NSDate date] options:0];
-//        int d = (int)[components day];
-//        
-//        NSLog(@"BeginDay = %@",BeginDay);
-//        NSLog(@"Today = %@",[NSDate date]);
-//        NSLog(@"d = %d", d);
-//        days = days - d;
-//    }
-//    
-//    [self SetDays:days];
-
     [self initUI];
     
     if (![self.TimeLabel.stringValue isEqualToString:[NSString stringWithFormat:@"%d:00",PlanTime ]])
         IRQCount ++;
+    
+    
     [self.WorkingTable makeKeyAndOrderFront:self];
     [NSApp activateIgnoringOtherApps:YES];
-
-    [self.BreakTimeWindow close];
+    
+    [self.WorkingTable setLevel: NSFloatingWindowLevel];
+    
+    
 }
 
-//- (IBAction)TapedSetGoal:(NSMenuItem *)sender
-//{
-////    [self.WorkingTable setLevel: NSFloatingWindowLevel];
-//    
-//    
-//}
 
 - (void)controlTextDidChange:(NSNotification *)aNotification
 {
@@ -572,7 +568,6 @@ NSString * const kDoneString = @"Done!";
 
 - (IBAction)TapedStart2:(id)sender
 {
-//    [self.WorkingTable close];
     [self.WorkingTable orderOut:self];
     [self TapedStart:nil];
 }
